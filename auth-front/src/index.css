@@ -13,43 +13,6 @@ label {
   display: block;
 }
 
-.form {
-  width: 400px;
-  margin: 0 auto;
-}
-
-input[type="text"],
-[type="password"] {
-  display: block;
-  padding: 10px;
-  box-sizing: border-box;
-  width: 100%;
-  margin: 5px 0 10px 0;
-}
-
-input[type="button"],
-button {
-  background-color: rgb(39, 131, 212);
-  padding: 10px;
-  border: 0;
-  min-width: 100px;
-  border-radius: 5px;
-  color: white;
-}
-
-nav {
-  background-color: #eee;
-}
-
-nav ul {
-  margin: 0;
-}
-
-nav ul li {
-  display: inline-block;
-  padding: 10px;
-}
-
 a {
   color: rgb(97, 28, 161);
   text-decoration: none;
@@ -57,7 +20,6 @@ a {
 
 .dashboard {
   width: 500px;
-  margin: auto;
 }
 
 .errorMessage {
