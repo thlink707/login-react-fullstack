@@ -1,10 +1,17 @@
+import { Navigate } from "react-router-dom";
 import DefaultLayout from "../layout/DefaultLayout";
 import { useState } from "react";
+import { useAuth } from "../auth/AuthProvider";
 
 export default function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const auth = useAuth();
+
+  if(auth.isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <DefaultLayout>
