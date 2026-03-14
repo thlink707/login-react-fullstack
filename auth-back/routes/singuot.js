@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
-    res.send("singuot");
+    res.send("Signout route");
 });
 
 module.exports = router;
