@@ -27,7 +27,7 @@ export default function Login() {
         });
   
         if (response.ok) {
-          console.log("User created successfully");
+          console.log("User authenticated successfully");
           setErrorResponse("");
   
           goTo("/dashboard");

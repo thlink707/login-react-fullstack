@@ -10,6 +10,13 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+async function connectDB() {
+    await mongoose.connect(process.env.DB_CONNECTION_STRING);
+    console.log("Connected to MongoDB");
+}
+
+connectDB().catch(console.error);
+
 app.use('/api/singup', require('./routes/singup'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/singuot', require('./routes/singuot'));
