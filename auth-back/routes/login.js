@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { jsonResponse } = require('../lib/jsonResponse');
+const User = require('../squema/user');
 
-router.post('/', (req, res) => {
+router.post('/', async(req, res) => {
     const { username, password } = req.body;
     
         if(!username || !password) {
@@ -10,19 +11,49 @@ router.post('/', (req, res) => {
             })
             );
         }
+
+        const user =  await User.findOne({ username });
+
+        if(user){
+            const correctPassword = await user.comparePassword(password);
+            if(correctPassword){
+                const accessToken = "access_token"; 
+                const refreshToken = "refresh_token"; 
+
+                const userData = {
+                    id: user._id,
+                    name: user.name,
+                    username: user.username,
+                };
+                
+                res
+                .status(200)
+                .json(jsonResponse(200, {
+                    user: userData, 
+                    accessToken, 
+                    refreshToken,
+                    message: "User authenticated successfully",
+                }));
+            }else{
+                res.status(401).json(jsonResponse(401, {
+                error: "Invalid username or password",
+            }));
+            }
+        } else{
+            res.status(401).json(jsonResponse(401, {
+                error: "Invalid username or password",
+            }));
+        }
     
         //Autenticar el usuario en la base de datos
-        const accessToken = "acces_token";
+        /*const accessToken = "acces_token";
         const refreshToken = "refresh_token";
         const user = {
             id: '1',
             name: 'John Doe',
             username: 'johndoe',
-        };
-        res.status(200).json(jsonResponse(200, {
-            user, accessToken, refreshToken,
-            message: "User authenticated successfully",
-        }));
+        };*/
+        
 });
 
 module.exports = router;

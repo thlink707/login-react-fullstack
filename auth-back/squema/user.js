@@ -7,11 +7,16 @@ const UserSchema = new Mongoose.Schema({
     password: {type: String, required: true},
 });
 
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function() {
     // Hashear la contraseña fue modificada o es un documento nuevo
          if (this.isModified('password') || this.isNew) {
         this.password = await bcrypt.hash(this.password, 10);
     }   
 });
+
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+}
+
 module.exports = Mongoose.model('User', UserSchema);
 
