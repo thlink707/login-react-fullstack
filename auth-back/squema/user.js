@@ -18,5 +18,13 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 }
 
+UserSchema.methods.createAccesToken = function(){
+
+};
+
+
+UserSchema.methods.refreshAccesToken = function(){
+    
+};
 module.exports = Mongoose.model('User', UserSchema);
 
