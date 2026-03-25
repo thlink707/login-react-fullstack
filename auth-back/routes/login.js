@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { jsonResponse } = require('../lib/jsonResponse');
 const User = require('../squema/user');
+const getUserInfo = require('../lib/getUserInfo');
 
 router.post('/', async(req, res) => {
     const { username, password } = req.body;
@@ -18,19 +19,13 @@ router.post('/', async(req, res) => {
             const correctPassword = await user.comparePassword(password);
             if(correctPassword){
                 //autenticar usuario
-                const accessToken = user.createAccesToken(); 
-                const refreshToken = user.refreshAccesToken(); 
-
-                const userData = {
-                    id: user._id,
-                    name: user.name,
-                    username: user.username,
-                };
+                const accessToken = user.createAccessToken(); 
+                const refreshToken = await user.refreshAccessToken(); 
                 
                 res
                 .status(200)
                 .json(jsonResponse(200, {
-                    user: userData, 
+                    user: getUserInfo(user), 
                     accessToken, 
                     refreshToken,
                     message: "User authenticated successfully",
